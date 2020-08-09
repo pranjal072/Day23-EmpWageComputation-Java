@@ -28,10 +28,12 @@ public class EmpWage implements IComputeEmpWage
 		}
 	}
 
-	public int computeEmpWage( Company comp )
+	public ArrayList<Integer> computeEmpWage( Company comp )
 	{
 		int workHr,wage;
-		int Salary = 0, totHr = 0, totDays = 0;
+		int totHr = 0, totDays = 0;
+		ArrayList<Integer> dailyWageArray = new ArrayList<Integer>();
+
 
 		System.out.println("COMPANY : " + comp.compName);
 
@@ -54,11 +56,10 @@ public class EmpWage implements IComputeEmpWage
 			totDays++;
 			totHr += workHr;
 			wage = workHr * comp.rateperHr;
-			System.out.println("Day "+ totDays + " wage is " + wage);
-			Salary += wage;
+			dailyWageArray.add(wage);
       }
 
-		return Salary;
+		return dailyWageArray;
 	}
 
 	public static void main(String[] args)
