@@ -1,28 +1,30 @@
+import java.util.ArrayList;
+
 public class EmpWage implements IComputeEmpWage
 {
 	public static final int fullTime = 1;
 	public static final int partTime = 2;
 
-	private int compNum = 0;
-	private Company[] compArray;
+	private ArrayList<Company> compList;
 
 	public EmpWage()
 	{
-		compArray = new Company[5];
+		compList = new ArrayList<>();
 	}
 
 	public void addCompany(String compName, int rateperHr, int maxDays, int maxHr)
 	{
-		compArray[compNum] = new Company(compName, rateperHr, maxDays, maxHr);
-		compNum++;
+		Company compNew = new Company(compName, rateperHr, maxDays, maxHr);
+		compList.add(compNew);
 	}
 
 	public void computeEmpWage()
 	{
-		for (int i =0; i < compNum; i++)
+		for (int i =0; i < compList.size(); i++)
 		{
-			compArray[i].eWage(this.computeEmpWage(compArray[i]));
-			System.out.println(compArray[i]);
+			Company company = compList.get(i);
+			company.eWage(this.computeEmpWage(company));
+			System.out.println(company);
 		}
 	}
 
@@ -66,7 +68,7 @@ public class EmpWage implements IComputeEmpWage
 		EmpWage empWageBuilder = new EmpWage();
 		empWageBuilder.addCompany("abc",20,4,10);
       empWageBuilder.addCompany("xyz",40,6,20);
-
+		empWageBuilder.addCompany("def",50,8,25);
 		empWageBuilder.computeEmpWage();
 
    }
