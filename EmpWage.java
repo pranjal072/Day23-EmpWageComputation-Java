@@ -1,63 +1,73 @@
 public class EmpWage
 {
-   public static final int fullTime = 1;
-   public static final int partTime = 2;
+	public static final int fullTime = 1;
+	public static final int partTime = 2;
 
-	private final String compName;
-	private final int rateperHr;
-	private final int maxDays;
-	private final int maxHr;
+	private int compNum = 0;
+	private Company[] compArray;
 
-   public EmpWage(String compName, int rateperHr, int maxDays, int maxHr)
+	public EmpWage()
 	{
-		this.compName = compName;
-		this.rateperHr = rateperHr;
-		this.maxDays = maxDays;
-		this.maxHr = maxHr;
+		compArray = new Company[5];
 	}
 
-	public void computeEmpWage()
-   {
-      int workHr,wage;
-      int Salary = 0, totHr = 0, totDays = 0;
+	private void addCompany(String compName, int rateperHr, int maxDays, int maxHr)
+	{
+		compArray[compNum] = new Company(compName, rateperHr, maxDays, maxHr);
+		compNum++;
+	}
 
-      System.out.println("COMPANY : " + compName);
+	private void computeEmpWage()
+	{
+		for (int i =0; i < compNum; i++)
+		{
+			compArray[i].eWage(this.computeEmpWage(compArray[i]));
+			System.out.println(compArray[i]);
+		}
+	}
 
-      while ( totHr < maxHr && totDays < maxDays )
-      {
+	public int computeEmpWage( Company comp )
+	{
+		int workHr,wage;
+		int Salary = 0, totHr = 0, totDays = 0;
 
-         int empCheck = (int) Math.floor(Math.random() * 10 ) % 3;
-         switch (empCheck)
-         {
-            case fullTime:
-               workHr=8;
-               break;
-            case partTime:
-               workHr=4;
-               break;
-            default:
-               workHr=0;
-         }
+		System.out.println("COMPANY : " + comp.compName);
 
-         totDays++;
-         totHr += workHr;
-         wage = workHr * rateperHr;
-         System.out.println("Day "+ totDays + " wage is " + wage);
-         Salary += wage;
+		while ( totHr < comp.maxHr && totDays < comp.maxDays )
+		{
+
+			int empCheck = (int) Math.floor(Math.random() * 10 ) % 3;
+			switch (empCheck)
+			{
+				case fullTime:
+					workHr=8;
+					break;
+				case partTime:
+					workHr=4;
+					break;
+				default:
+					workHr=0;
+			}
+
+			totDays++;
+			totHr += workHr;
+			wage = workHr * comp.rateperHr;
+			System.out.println("Day "+ totDays + " wage is " + wage);
+			Salary += wage;
       }
 
-      System.out.println("For Company : " + compName + " ,Total Salary of this Month is : " + Salary + "\n");
-   }
+		return Salary;
+	}
 
-   public static void main(String[] args)
-   {
-      System.out.println("Welcome to Employee Wage Calculation !! \n");
+	public static void main(String[] args)
+	{
+		System.out.println("Welcome to Employee Wage Calculation !! \n");
 
-		EmpWage abc = new EmpWage("abc",20,4,10);
-      EmpWage xyz = new EmpWage("xyz",40,6,20);
+		EmpWage empWageBuilder = new EmpWage();
+		empWageBuilder.addCompany("abc",20,4,10);
+      empWageBuilder.addCompany("xyz",40,6,20);
 
-		abc.computeEmpWage();
-		xyz.computeEmpWage();
+		empWageBuilder.computeEmpWage();
 
    }
 }
