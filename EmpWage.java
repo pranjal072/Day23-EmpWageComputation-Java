@@ -1,4 +1,4 @@
-public class EmpWage
+public class EmpWage implements IComputeEmpWage
 {
 	public static final int fullTime = 1;
 	public static final int partTime = 2;
@@ -11,13 +11,13 @@ public class EmpWage
 		compArray = new Company[5];
 	}
 
-	private void addCompany(String compName, int rateperHr, int maxDays, int maxHr)
+	public void addCompany(String compName, int rateperHr, int maxDays, int maxHr)
 	{
 		compArray[compNum] = new Company(compName, rateperHr, maxDays, maxHr);
 		compNum++;
 	}
 
-	private void computeEmpWage()
+	public void computeEmpWage()
 	{
 		for (int i =0; i < compNum; i++)
 		{
