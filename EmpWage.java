@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EmpWage implements IComputeEmpWage
 {
@@ -6,16 +7,19 @@ public class EmpWage implements IComputeEmpWage
 	public static final int partTime = 2;
 
 	private ArrayList<Company> compList;
+	private HashMap<String, Company> companyToSalaryMap;
 
 	public EmpWage()
 	{
 		compList = new ArrayList<>();
+		companyToSalaryMap = new HashMap<>();
 	}
 
 	public void addCompany(String compName, int rateperHr, int maxDays, int maxHr)
 	{
 		Company compNew = new Company(compName, rateperHr, maxDays, maxHr);
 		compList.add(compNew);
+		companyToSalaryMap.put(compName, compNew);
 	}
 
 	public void computeEmpWage()
@@ -62,6 +66,11 @@ public class EmpWage implements IComputeEmpWage
 		return dailyWageArray;
 	}
 
+	public int getSalary(String compName)
+	{
+		return companyToSalaryMap.get(compName).salary;
+	}
+
 	public static void main(String[] args)
 	{
 		System.out.println("Welcome to Employee Wage Calculation !! \n");
@@ -71,6 +80,8 @@ public class EmpWage implements IComputeEmpWage
       empWageBuilder.addCompany("xyz",40,6,20);
 		empWageBuilder.addCompany("def",50,8,25);
 		empWageBuilder.computeEmpWage();
+
+		System.out.println("Total Wage for abc Company is : " + empWageBuilder.getSalary("abc"));
 
    }
 }
